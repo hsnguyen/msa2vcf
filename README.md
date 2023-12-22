@@ -5,7 +5,7 @@ Turn a fasta-format MSA into one vcf per sequence.
 `msa2vcf msa.fasta ref_name`
 
 ## Install
-`pip install git+https://github.com/connor-lab/msa2vcf.git`
+`pip install git+https://github.com/hsnguyen/msa2vcf.git`
 
 ## Notes
 VCF position is based on reference position.

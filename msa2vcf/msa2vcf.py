@@ -11,7 +11,7 @@ from itertools import groupby
 
 
 def iupac_to_base(base):
-    
+
     lookup_iupac = { 'R' : ['A', 'G'],
                      'Y' : ['C', 'T'],
                      'S' : ['G', 'C'],
@@ -51,8 +51,8 @@ def group_dels(dels):
     return grouped_dels
 
 def group_ins(ins):
-    res =  [(el - 1, ins.count(el) + 1) for el in ins] 
-    
+    res =  [(el - 1, ins.count(el) + 1) for el in ins]
+
     return set(res)
 
 def fix_complex_vars(all_vars, rseq, qseq):
@@ -100,7 +100,7 @@ def update_snps(qseq, rseq):
             elif rseq[qpos] == "-":
                 # insertion
                 ins.append(ins_aware_pos)
-                
+
             else:
                 # snp
                 snps.append((ins_aware_pos, qbase))
@@ -162,11 +162,11 @@ def deconvolute_IUPAC(var):
     var.append(round(1 / num_alts, 2))
 
     return var
-    
+
 
 def make_vcf(snps, qname, rname, keep_n):
 
-    vcflines = []    
+    vcflines = []
 
     # header
     vcflines.append("##fileformat=VCFv4.2")
@@ -174,11 +174,12 @@ def make_vcf(snps, qname, rname, keep_n):
     vcflines.append("##contig=<ID=" + rname + ">")
     vcflines.append("##INFO=<ID=DP,Number=1,Type=Integer,Description=\"Total Depth\">")
     vcflines.append("##INFO=<ID=AF,Number=A,Type=Float,Description=\"Allele Frequency\">")
-    vcflines.append("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\t"+qname)
+    vcflines.append("##INFO=<ID=GP,Number=1,Type=String,Description=\"Genotype\">")
+    vcflines.append("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT"+qname)
 
     # variants
     for line in snps:
-         vcf_line = None 
+         vcf_line = None
 
          alt_no_n = re.sub(r'(N|-)+', '', line[3])
 
@@ -186,16 +187,16 @@ def make_vcf(snps, qname, rname, keep_n):
 
          if alt_no_n:
              if not line[1] == alt_no_n:
-                 vcf_line = '\t'.join([rname, str(line[2] + 1 ), ".", line[1], alt_no_gap, ".", "PASS", "DP=1;AF="+str(line[6])])
+                 vcf_line = '\t'.join([rname, str(line[2] + 1 ), ".", line[1], alt_no_gap, ".", "PASS", "DP=1;AF="+str(line[6]), "GP", "1"])
 
          else:
              if keep_n:
-                 vcf_line = '\t'.join([rname, str(line[2] + 1 ), ".", line[1], alt_no_gap, ".", "PASS", "DP=1;AF="+str(line[6])])
+                 vcf_line = '\t'.join([rname, str(line[2] + 1 ), ".", line[1], alt_no_gap, ".", "PASS", "DP=1;AF="+str(line[6]), "GP", "1"])
 
          if vcf_line:
              vcflines.append(vcf_line)
 
-        
+
     return vcflines
 
 
@@ -212,7 +213,7 @@ def go(args):
     refseq = get_ref_seq(args.msa, args.refname)
 
     if not refseq:
-        print(args.refname + " not found\n") 
+        print(args.refname + " not found\n")
         sys.exit(1)
 
     with open(args.msa) as f:
