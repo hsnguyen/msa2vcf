@@ -175,7 +175,7 @@ def make_vcf(snps, qname, rname, keep_n):
     vcflines.append("##INFO=<ID=DP,Number=1,Type=Integer,Description=\"Total Depth\">")
     vcflines.append("##INFO=<ID=AF,Number=A,Type=Float,Description=\"Allele Frequency\">")
     vcflines.append("##INFO=<ID=GP,Number=1,Type=String,Description=\"Genotype\">")
-    vcflines.append("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT"+qname)
+    vcflines.append("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t"+qname)
 
     # variants
     for line in snps:
