@@ -186,11 +186,11 @@ def make_vcf(snps, qname, rname, keep_n):
 
          if alt_no_n:
              if not line[1] == alt_no_n:
-                 vcf_line = '\t'.join([rname, str(line[2] + 1 ), ".", line[1], alt_no_gap, ".", "PASS", "DP=1", "GT", "1/1"])
+                 vcf_line = '\t'.join([rname, str(line[2] + 1 ), ".", line[1], alt_no_gap, ".", "PASS", "DP=1", "GT", "1"])
 
          else:
              if keep_n:
-                 vcf_line = '\t'.join([rname, str(line[2] + 1 ), ".", line[1], alt_no_gap, ".", "PASS", "DP=1", "GT", "1/1"])
+                 vcf_line = '\t'.join([rname, str(line[2] + 1 ), ".", line[1], alt_no_gap, ".", "PASS", "DP=1", "GT", "1"])
 
          if vcf_line:
              vcflines.append(vcf_line)
